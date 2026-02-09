@@ -1,19 +1,38 @@
+// Run after page loads
 document.addEventListener("DOMContentLoaded", function () {
     populateOptions("fishType", Object.keys(fishData));
     populateOptions("treeType", Object.keys(treeData));
     populateOptions("plantType", Object.keys(plantData));
-    populateOptions("cropsType", Object.keys(cropdata));  // Fixed ID here
+    populateOptions("cropsType", Object.keys(cropdata));
+
+    // Initialize first values
+    updateFishInfo();
+    updateTreeInfo();
+    updatePlantInfo();
+    updatecropInfo();
+    // Ensure menu button state matches the initially active section
+    const initial = document.querySelector('.section.active');
+    if (initial) showSection(initial.id);
 });
 
-// Function to show the selected section
+// Show selected section
 function showSection(sectionId) {
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.remove('active');
+    document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
     });
-    document.getElementById(sectionId).classList.add('active');
+    document.getElementById(sectionId).classList.add("active");
+
+    // Update active state on menu buttons
+    document.querySelectorAll('#menu button').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('#menu button').forEach(btn => {
+        const onclick = btn.getAttribute('onclick') || '';
+        if (onclick.includes(sectionId)) btn.classList.add('active');
+    });
 }
 
-// Fish Data
+/* ===================== DATA ===================== */
+
+// Fish Data (15 types)
 const fishData = {
     "Tilapia": { feed: "Pellets", period: 6 },
     "Catfish": { feed: "Insects & Pellets", period: 5 },
@@ -32,9 +51,8 @@ const fishData = {
     "Flounder": { feed: "Mollusks & Insects", period: 7 }
 };
 
-// Tree Data
+// Tree Data (15 types)
 const treeData = {
-    
     "Mango": { spacing: 10, water: "Drip", soil: "Loamy" },
     "Apple": { spacing: 5, water: "Sprinkler", soil: "Clay" },
     "Orange": { spacing: 6, water: "Flood", soil: "Sandy" },
@@ -68,7 +86,6 @@ const plantData = {
 
 // Crop Data
 const cropdata = {
-    
     "Rice": { spacing: 0.2, water: "Flood", soil: "Clayey" },
     "Wheat": { spacing: 0.3, water: "Sprinkler", soil: "Loamy" },
     "Corn": { spacing: 0.4, water: "Drip", soil: "Sandy" },
@@ -77,88 +94,98 @@ const cropdata = {
     "Groundnut": { spacing: 0.4, water: "Minimal", soil: "Sandy" }
 };
 
-// Populate dropdown options
+/* ===================== FUNCTIONS ===================== */
+
+// Populate dropdowns
 function populateOptions(selectId, options) {
-    let select = document.getElementById(selectId);
-    select.innerHTML = "";  // Clear existing options
+    const select = document.getElementById(selectId);
+    select.innerHTML = "";
     options.forEach(option => {
-        let opt = document.createElement("option");
+        const opt = document.createElement("option");
         opt.value = option;
-        opt.innerText = option;
+        opt.textContent = option;
         select.appendChild(opt);
     });
 }
 
-// Update fish information
+// Update Fish Info
 function updateFishInfo() {
-    let type = document.getElementById("fishType").value;
-    document.getElementById("fishFeed").innerText = fishData[type].feed;
-    document.getElementById("fishPeriod").innerText = fishData[type].period;
+    const type = document.getElementById("fishType").value;
+    document.getElementById("fishFeed").textContent = fishData[type].feed;
+    document.getElementById("fishPeriod").textContent = fishData[type].period;
 }
 
-// Update tree information
+// Update Tree Info
 function updateTreeInfo() {
-    let type = document.getElementById("treeType").value;
-    document.getElementById("treeSpacing").innerText = treeData[type].spacing;
-    document.getElementById("treeWater").innerText = treeData[type].water;
-    document.getElementById("treeSoil").innerText = treeData[type].soil;
+    const type = document.getElementById("treeType").value;
+    document.getElementById("treeSpacing").textContent = treeData[type].spacing;
+    document.getElementById("treeWater").textContent = treeData[type].water;
+    document.getElementById("treeSoil").textContent = treeData[type].soil;
 }
 
-// Update plant information
+// Update Plant Info
 function updatePlantInfo() {
-    let type = document.getElementById("plantType").value;
-    document.getElementById("plantSpacing").innerText = plantData[type].spacing;
-    document.getElementById("plantWater").innerText = plantData[type].water;
-    document.getElementById("plantSoil").innerText = plantData[type].soil;
+    const type = document.getElementById("plantType").value;
+    document.getElementById("plantSpacing").textContent = plantData[type].spacing;
+    document.getElementById("plantWater").textContent = plantData[type].water;
+    document.getElementById("plantSoil").textContent = plantData[type].soil;
 }
 
-// Update crop information
+// Update Crop Info
 function updatecropInfo() {
-    let type = document.getElementById("cropsType").value;
-    document.getElementById("cropSpacing").innerText = cropdata[type].spacing;
-    document.getElementById("cropWater").innerText = cropdata[type].water;
-    document.getElementById("cropSoil").innerText = cropdata[type].soil;
+    const type = document.getElementById("cropsType").value;
+    document.getElementById("cropSpacing").textContent = cropdata[type].spacing;
+    document.getElementById("cropWater").textContent = cropdata[type].water;
+    document.getElementById("cropSoil").textContent = cropdata[type].soil;
 }
 
-// Calculate pond area and fish capacity
+// Pond Calculation
 function calculatePond() {
-    let length = parseFloat(document.getElementById("pondLength").value) || 0;
-    let width = parseFloat(document.getElementById("pondWidth").value) || 0;
-    let area = length * width;
-    let fishCapacity = Math.floor(area * 5);  // Assuming 5 fish per sq.m
-    document.getElementById("pondArea").innerText = area.toFixed(2);
-    document.getElementById("fishCount").innerText = fishCapacity;
+    const length = parseFloat(document.getElementById("pondLength").value) || 0;
+    const width = parseFloat(document.getElementById("pondWidth").value) || 0;
+
+    const area = length * width;
+    const fishCount = Math.floor(area * 5); // 5 fish per sq.m
+
+    document.getElementById("pondArea").textContent = area.toFixed(2);
+    document.getElementById("fishCount").textContent = fishCount;
 }
 
-// Calculate tree area and count
+// Tree Calculation
 function calculateTree() {
-    let length = parseFloat(document.getElementById("treeLength").value) || 0;
-    let width = parseFloat(document.getElementById("treeWidth").value) || 0;
-    let spacing = parseFloat(document.getElementById("treeSpacing").innerText) || 1;
-    let area = length * width;
-    let treeCount = Math.floor(area / (spacing * spacing));
-    document.getElementById("treeArea").innerText = area.toFixed(2);
-    document.getElementById("treeCount").innerText = treeCount;
+    const length = parseFloat(document.getElementById("treeLength").value) || 0;
+    const width = parseFloat(document.getElementById("treeWidth").value) || 0;
+    const spacing = parseFloat(document.getElementById("treeSpacing").textContent) || 1;
+
+    const area = length * width;
+    const count = Math.floor(area / (spacing * spacing));
+
+    document.getElementById("treeArea").textContent = area.toFixed(2);
+    document.getElementById("treeCount").textContent = count;
 }
 
-// Calculate plant area and count
+// Plant Calculation
 function calculatePlant() {
-    let length = parseFloat(document.getElementById("plantLength").value) || 0;
-    let width = parseFloat(document.getElementById("plantWidth").value) || 0;
-    let spacing = parseFloat(document.getElementById("plantSpacing").innerText) || 1;
-    let area = length * width;
-    let plantCount = Math.floor(area / (spacing * spacing));
-    document.getElementById("plantArea").innerText = area.toFixed(2);
-    document.getElementById("plantCount").innerText = plantCount;
+    const length = parseFloat(document.getElementById("plantLength").value) || 0;
+    const width = parseFloat(document.getElementById("plantWidth").value) || 0;
+    const spacing = parseFloat(document.getElementById("plantSpacing").textContent) || 1;
+
+    const area = length * width;
+    const count = Math.floor(area / (spacing * spacing));
+
+    document.getElementById("plantArea").textContent = area.toFixed(2);
+    document.getElementById("plantCount").textContent = count;
 }
 
-// Calculate crop area and count
+// Crop Calculation
 function calculatecrop() {
-    let length = parseFloat(document.getElementById("cropLength").value) || 0;
-    let width = parseFloat(document.getElementById("cropWidth").value) || 0;
-    let spacing = parseFloat(document.getElementById("cropSpacing").innerText) || 1;
-    let area = length * width;
-    let cropCount = Math.floor(area / (spacing * spacing));
-    document.getElementById("cropArea").innerText = area.toFixed(2);
-    document.getElementById("cropCount").innerText = cropCount;
+    const length = parseFloat(document.getElementById("cropLength").value) || 0;
+    const width = parseFloat(document.getElementById("cropWidth").value) || 0;
+    const spacing = parseFloat(document.getElementById("cropSpacing").textContent) || 1;
+
+    const area = length * width;
+    const count = Math.floor(area / (spacing * spacing));
+
+    document.getElementById("cropArea").textContent = area.toFixed(2);
+    document.getElementById("cropCount").textContent = count;
 }

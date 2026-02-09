@@ -1,43 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-    <center>
-    <h1 style="display: flexbox; color: black   ;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; margin-right: 30px; font-size: xxx-large;" >THE AGRI PLAN</h1> </center>
-   <hr width="1000">
-   <link rel="stylesheet" href="https://easy-peasy.ai/cdn-cgi/image/quality=80,format=auto,width=700/https://media.easy-peasy.ai/80d336fc-2034-4b10-8dd2-8eb15f6aa898/268162b5-b278-4fc9-b2e4-247d12098129.png">
-    <img class="one" src="det.webp" width="500px">
-    
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farmer Idea</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body >
+
+<body>
+
+    <center>
+        <h1 style="color:black;font-family:Lucida Sans;font-size:xxx-large;">
+            THE AGRI PLAN
+        </h1>
+        <hr width="1000">
+    </center>
+
+    <center>
+        <img class="one" src="det.webp" width="500px">
+    </center>
+
     <div class="container">
-        <h2 style="color: black; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"> Select the categories</h2>
+        <h2>Select the categories</h2>
+
         <div id="menu">
-            <button onclick="showSection('pond')">Pond</button>
-            <br>
-            <button onclick="showSection('tree')">Tree</button>
-            <br>
-            <button onclick="showSection('plants')">Plants</button>
-            <br>
+            <button onclick="showSection('pond')">Pond</button><br>
+            <button onclick="showSection('tree')">Tree</button><br>
+            <button onclick="showSection('plants')">Plants</button><br>
             <button onclick="showSection('crops')">Crops</button>
-            <br>
         </div>
 
         <!-- Pond Section -->
-        <div id="pond" class="section">
-            <h2 style>Pond Section</h2>
+        <div id="pond" class="section active">
+            <h2>Pond Section</h2>
+
             <label>Choose Fish Type:
                 <select id="fishType" onchange="updateFishInfo()"></select>
             </label>
+
             <p>Feed Name: <span id="fishFeed">-</span></p>
             <p>Growth Period: <span id="fishPeriod">-</span> months</p>
-            <label>Length of the pond (m): <input type="number" id="pondLength" oninput="calculatePond()"></label>
-            <label>Width of the pond (m): <input type="number" id="pondWidth" oninput="calculatePond()"></label>
-            <label>Depth of the pond (m): <input type="number" id="pondDepth" oninput="calculatePond()"></label>
+
+            <label>Length (m):
+                <input type="number" id="pondLength" oninput="calculatePond()">
+            </label>
+
+            <label>Width (m):
+                <input type="number" id="pondWidth" oninput="calculatePond()">
+            </label>
+
+            <label>Depth (m):
+                <input type="number" id="pondDepth">
+            </label>
+
             <p>Area: <span id="pondArea">0</span> sq.m</p>
             <p>Fish Capacity: <span id="fishCount">0</span></p>
         </div>
@@ -45,14 +60,23 @@
         <!-- Tree Section -->
         <div id="tree" class="section">
             <h2>Tree Section</h2>
+
             <label>Choose Tree Type:
                 <select id="treeType" onchange="updateTreeInfo()"></select>
             </label>
-            <p>Distance Between Trees: <span id="treeSpacing">-</span> m</p>
-            <p>Water Method: <span id="treeWater">-</span></p>
-            <p>Soil Type: <span id="treeSoil">-</span></p>
-            <label>Length of the land (m): <input type="number" id="treeLength" oninput="calculateTree()"></label>
-            <label>Width of the land (m): <input type="number" id="treeWidth" oninput="calculateTree()"></label>
+
+            <p>Distance: <span id="treeSpacing">-</span> m</p>
+            <p>Water: <span id="treeWater">-</span></p>
+            <p>Soil: <span id="treeSoil">-</span></p>
+
+            <label>Length (m):
+                <input type="number" id="treeLength" oninput="calculateTree()">
+            </label>
+
+            <label>Width (m):
+                <input type="number" id="treeWidth" oninput="calculateTree()">
+            </label>
+
             <p>Area: <span id="treeArea">0</span> sq.m</p>
             <p>Number of Trees: <span id="treeCount">0</span></p>
         </div>
@@ -60,44 +84,56 @@
         <!-- Plants Section -->
         <div id="plants" class="section">
             <h2>Plants Section</h2>
+
             <label>Choose Plant Type:
                 <select id="plantType" onchange="updatePlantInfo()"></select>
             </label>
-            <p>Distance Between Plants: <span id="plantSpacing">-</span> m</p>
-            <p>Water Method: <span id="plantWater">-</span></p>
-            <p>Soil Type: <span id="plantSoil">-</span></p>
-            <label>Length of the land (m): <input type="number" id="plantLength" oninput="calculatePlant()"></label>
-            <label>Width of the land (m): <input type="number" id="plantWidth" oninput="calculatePlant()"></label>
+
+            <p>Distance: <span id="plantSpacing">-</span> m</p>
+            <p>Water: <span id="plantWater">-</span></p>
+            <p>Soil: <span id="plantSoil">-</span></p>
+
+            <label>Length (m):
+                <input type="number" id="plantLength" oninput="calculatePlant()">
+            </label>
+
+            <label>Width (m):
+                <input type="number" id="plantWidth" oninput="calculatePlant()">
+            </label>
+
             <p>Area: <span id="plantArea">0</span> sq.m</p>
             <p>Number of Plants: <span id="plantCount">0</span></p>
         </div>
-        <!----crop section---->
+
+        <!-- Crops Section -->
         <div id="crops" class="section">
-            <h2> Crops Section</h2>
+            <h2>Crops Section</h2>
+
             <label>Choose Crop Type:
                 <select id="cropsType" onchange="updatecropInfo()"></select>
             </label>
-            <p>Distance Between crop: <span id="cropSpacing">-</span> m</p>
-            <p>Water Method: <span id="cropWater">-</span></p>
-            <p>Soil Type: <span id="cropSoil">-</span></p>
-            <label>Length of the land (m): <input type="number" id="cropLength" oninput="calculatecrop()"></label>
-            <label>Width of the land (m): <input type="number" id="cropWidth" oninput="calculatecrop()"></label>
+
+            <p>Distance: <span id="cropSpacing">-</span> m</p>
+            <p>Water: <span id="cropWater">-</span></p>
+            <p>Soil: <span id="cropSoil">-</span></p>
+
+            <label>Length (m):
+                <input type="number" id="cropLength" oninput="calculatecrop()">
+            </label>
+
+            <label>Width (m):
+                <input type="number" id="cropWidth" oninput="calculatecrop()">
+            </label>
+
             <p>Area: <span id="cropArea">0</span> sq.m</p>
             <p>Number of Crops: <span id="cropCount">0</span></p>
         </div>
-
-
-
-
-
-
-
-        
     </div>
 
     <center>
-        <h3 style="font-size: small; padding: 50px;"> By B.Dheenadhayalan </h3>
-       </center>
+        <h3 style="font-size: small; padding: 50px;">By B. DheenaDhayalan</h3>
+    </center>
+
     <script src="app.js"></script>
 </body>
 </html>
